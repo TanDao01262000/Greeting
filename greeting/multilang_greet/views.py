@@ -9,3 +9,6 @@ def home(request):
     }
 
     return render(request, 'multilang_greet/home.html', context)
+
+def b1_test(request):
+    pass
