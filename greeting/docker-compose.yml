@@ -1,0 +1,32 @@
+version: '3.8'
+
+# needed two services, one is db and the other is 
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: Greeting
+      POSTGRES_USER: tandao
+      POSTGRES_PASSWORD: Whatever123:)
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+
+  web:
+    build: .
+    restart: always
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      DJANGO_SETTINGS_MODULE: greeting.settings
+      POSTGRES_DB: Greeting
+      POSTGRES_USER: tandao
+      POSTGRES_PASSWORD: Whatever123:)
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+
+volumes:
+  db-data:
